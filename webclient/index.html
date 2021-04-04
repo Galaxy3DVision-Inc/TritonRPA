@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Riemann RPA Client</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="media-src 'self' blob: ">
+    <script src="wscdef.js"></script>
+    <script src="dataframe.js"></script>
+    <script src="wsconnect.js"></script>
+    <script src="weapi.js"></script>
+    <script src="wsbind.js"></script>
+    <script>
+        var seq_num = 0;
+        function onMsgRet(code, desc) {
+            alert(code);
+        }
+        function sendToContact() {
+            var msg = idInput.value + seq_num;
+            var id = "Jackinboxusa";
+            SendFrame(id, msg, onMsgRet);
+            seq_num++;
+        }
+        function sendToGroup() {
+            var msg = idInput.value + seq_num;
+            var id = "微信RPA开发";
+            SendFrame(id, msg, onMsgRet);
+            seq_num++;
+        }
+    </script>
+</head>
+<body>
+    <div >
+        <textarea rows="30" cols="40" id="idMsg" style="display: block;"></textarea>
+        <div style="display: block;">
+            <input type="text" id="idInput" />
+            <button onclick="sendToContact()">Send to Contact</button>
+            <button onclick="sendToGroup()">Send to Group</button>
+        </div>
+    </div>
+</body>
+</html>
