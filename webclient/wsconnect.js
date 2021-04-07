@@ -64,7 +64,7 @@ class WsConnect
 	SendHeartBeat()
 	{
 		var f = new DataFrame();
-		f.type = DataFrameType.Framework_ClientRegFrameTypes;
+		f.type = DataFrameType.PascalToNeumann_Heart;
 		f.sourceIndex = 0;
 		f.startTime = this.getCurTime();
 		f.dataSize = 0;
@@ -131,6 +131,14 @@ class WsConnect
 		{
 			alert("<p>Error " + exception);
 		}
+
+		window.setInterval
+		(
+			function ()
+			{
+				self.SendHeartBeat();
+			}, 3000
+		);
 	}
 	Parse(data, size)
 	{
