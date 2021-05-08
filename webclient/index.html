@@ -13,7 +13,8 @@
     <script>
         var seq_num = 0;
         function onMsgRet(code, desc) {
-            alert(code);
+            //alert(code);
+            idRet.value = desc;
         }
         function sendToContact() {
             var msg = idInput.value + seq_num;
@@ -27,16 +28,31 @@
             SendFrame(id, msg, onMsgRet);
             seq_num++;
         }
+        //list all tables from Database
+        //SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'
+        //List all databases,
+        //pass dbName with "" and sql with SELECT * FROM @databases
+        function runQuery() {
+            var sql = idQuery.value;
+            var dbName = idDBName.value;
+            Query(dbName, sql, onMsgRet);
+        }
     </script>
 </head>
 <body>
     <div >
-        <textarea rows="30" cols="40" id="idMsg" style="display: block;"></textarea>
+        <textarea rows="30" cols="60" id="idMsg" style="display: block;"></textarea>
         <div style="display: block;">
             <input type="text" id="idInput" />
             <button onclick="sendToContact()">Send to Contact</button>
             <button onclick="sendToGroup()">Send to Group</button>
         </div>
+    </div>
+    <div>
+        Database:<input type="text" width="400" id="idDBName"/>
+        <textarea rows="3" cols="60" id="idQuery" style="display: block;">SELECT  * FROM @databases</textarea>
+        <button onclick="runQuery()">Run Query</button>
+        <textarea rows="6",cols="60" id="idRet" style="display: block;"></textarea>
     </div>
 </body>
 </html>

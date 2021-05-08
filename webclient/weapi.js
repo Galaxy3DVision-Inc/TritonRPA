@@ -37,7 +37,8 @@ class WeApi
                 {
                     if (self.callMap.has(frm.refID))
                     {
-                        self.callMap[frm.refID](retObj["code"], retObj["Desc"]);
+                        var cb = self.callMap.get(frm.refID);                     
+                        cb(retObj["code"], retObj["desc"]);
                     }
                 }
             }
@@ -79,7 +80,30 @@ class WeApi
         frm.startTime = d.getTime();
         frm.refID = ++this.refid;
         if (callback != null && callback != undefined) {
-            this.callMap.set(frm.refID, callback);
+            self.callMap.set(frm.refID, callback);
+        }
+        var aryData = new TextEncoder().encode(cmdJson);
+        frm.data = aryData;
+        frm.dataSize = aryData.length;
+        this.ws.send(frm);
+    }
+    Query(dbName,sql, callback) {
+        var cmdObj =
+        {
+            name: "Query",
+            id: "1",
+            param1: sql,
+            param2: dbName
+        };
+        var cmdJson = JSON.stringify([cmdObj]);
+        var frm = new DataFrame();
+        frm.type = this.ws.MedType("wcmd");
+        frm.sourceId = this.sourceId;
+        var d = new Date();
+        frm.startTime = d.getTime();
+        frm.refID = ++this.refid;
+        if (callback != null && callback != undefined) {
+            self.callMap.set(frm.refID, callback);
         }
         var aryData = new TextEncoder().encode(cmdJson);
         frm.data = aryData;

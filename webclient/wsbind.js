@@ -20,3 +20,9 @@ function SendFrame(id,msg,callback) {
         g_api.sendMsg(id, msg, callback);
     }
 }
+function Query(dbName, sql, callback) {
+    if (g_api != null) {
+        g_api.Query(dbName, sql, callback);
+    }
+}
+
