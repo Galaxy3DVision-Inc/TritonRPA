@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RPA Database Tool</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="media-src 'self' blob: ">
+    <script src="wscdef.js"></script>
+    <script src="dataframe.js"></script>
+    <script src="wsconnect.js"></script>
+    <script src="weapi.js"></script>
+    <script src="wsbind.js"></script>
+    <script>
+        var seq_num = 0;
+        function onMsgRet(code, desc) {
+            //alert(code);
+            idRet.value = desc;
+        }
+        //list all tables from Database
+        //SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%'
+        //List all databases,
+        //pass dbName with "" and sql with SELECT * FROM @databases
+        function runQuery() {
+            var sql = idQuery.value;
+            var dbName = idDBName.value;
+            Query(dbName, sql, onMsgRet);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        Database:<input type="text" width="400" id="idDBName"/>
+        <textarea rows="3" cols="60" id="idQuery" style="display: block;">SELECT  * FROM @databases</textarea>
+        <button onclick="runQuery()">Run Query</button>
+        <textarea rows="6",cols="60" id="idRet" style="display: block;"></textarea>
+    </div>
+</body>
+</html>
